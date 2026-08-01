@@ -1,0 +1,50 @@
+import {
+    Cloud,
+    Code,
+    Database,
+    GitBranch,
+    Globe,
+    Layers,
+    LayoutTemplate,
+    MessageSquare,
+    Palette,
+    PenTool,
+    Plug,
+    Rocket,
+    Search,
+    Server,
+    Settings,
+    Shield,
+    Smartphone,
+    Sparkles,
+    Wrench,
+    Zap,
+    type LucideIcon,
+} from 'lucide-react';
+
+export const serviceIcons: Record<string, LucideIcon> = {
+    Code,
+    LayoutTemplate,
+    Palette,
+    Database,
+    Server,
+    Cloud,
+    Shield,
+    Smartphone,
+    Globe,
+    Wrench,
+    Zap,
+    MessageSquare,
+    Plug,
+    Sparkles,
+    GitBranch,
+    Search,
+    PenTool,
+    Settings,
+    Layers,
+    Rocket,
+};
+
+export function serviceIcon(name: string | null): LucideIcon {
+    return (name && serviceIcons[name]) || Sparkles;
+}
