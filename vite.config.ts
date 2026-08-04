@@ -5,6 +5,18 @@ import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+    server: {
+        watch: {
+            // Wayfinder regenerates these directories on every route/controller
+            // change; watching them too causes a Windows chokidar race
+            // (scandir UNKNOWN) that crashes the dev server.
+            ignored: [
+                '**/resources/js/routes/**',
+                '**/resources/js/actions/**',
+                '**/resources/js/wayfinder/**',
+            ],
+        },
+    },
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],

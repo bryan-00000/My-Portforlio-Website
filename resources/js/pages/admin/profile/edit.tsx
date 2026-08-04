@@ -32,7 +32,7 @@ export default function EditProfile({ profile }: { profile: Profile }) {
         linkedin_url: profile.linkedin_url ?? '',
         x_url: profile.x_url ?? '',
         website_url: profile.website_url ?? '',
-        _method: 'put',
+        _method: 'patch',
     });
 
     const submit = (e: FormEvent) => {

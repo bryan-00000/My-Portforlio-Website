@@ -1,12 +1,3 @@
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
 import PublicLayout from '@/layouts/public-layout';
 import { storageUrl } from '@/lib/utils';
 import { contact, projects as projectsRoute } from '@/routes';
@@ -20,90 +11,83 @@ interface HomeProps {
     skills: Skill[];
 }
 
-export default function Home({ profile, featuredProjects, skills }: HomeProps) {
+export default function Home({
+    profile,
+    featuredProjects,
+    skills,
+}: HomeProps) {
     return (
         <PublicLayout>
             <Head title="Home" />
 
-            <section className="mx-auto max-w-5xl px-6 py-24 text-center sm:py-32">
-                <h1 className="text-4xl font-bold tracking-tight text-balance sm:text-6xl">
-                    {profile.name}
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground sm:text-xl">
-                    {profile.headline}
-                </p>
-                <div className="mt-8 flex items-center justify-center gap-4">
-                    <Button size="lg" asChild>
-                        <Link href={projectsRoute()}>
-                            View my work
-                            <ArrowRight className="h-4 w-4" />
-                        </Link>
-                    </Button>
-                    <Button size="lg" variant="outline" asChild>
-                        <Link href={contact()}>Get in touch</Link>
-                    </Button>
+            <section className="p-hero">
+                <h1 className="p-hero-title">{profile.name}</h1>
+                <p className="p-hero-sub">{profile.headline}</p>
+                <div className="p-hero-actions">
+                    <Link href={projectsRoute()} className="p-btn-primary">
+                        View my work <ArrowRight className="h-4 w-4" />
+                    </Link>
+                    <Link href={contact()} className="p-btn-ghost">
+                        Get in touch
+                    </Link>
                 </div>
 
                 {skills.length > 0 && (
-                    <div className="mt-12 flex flex-wrap items-center justify-center gap-2">
+                    <div className="p-chip-row">
                         {skills.slice(0, 8).map((skill) => (
-                            <Badge key={skill.id} variant="secondary">
+                            <span key={skill.id} className="p-chip">
                                 {skill.name}
-                            </Badge>
+                            </span>
                         ))}
                     </div>
                 )}
             </section>
 
             {featuredProjects.length > 0 && (
-                <section className="border-t bg-muted/30">
-                    <div className="mx-auto max-w-5xl px-6 py-20">
-                        <div className="mb-10 flex items-end justify-between">
-                            <h2 className="text-2xl font-semibold tracking-tight">
-                                Featured projects
-                            </h2>
-                            <Link
-                                href={projectsRoute()}
-                                className="text-sm font-medium text-muted-foreground hover:text-foreground"
-                            >
-                                View all
-                            </Link>
-                        </div>
+                <section>
+                    <div className="mb-6 flex items-end justify-between">
+                        <h2 className="p-section-title !mt-0">
+                            Featured projects
+                        </h2>
+                        <Link
+                            href={projectsRoute()}
+                            className="text-sm font-medium text-[#8ea3c4] hover:text-[#7dd3fc]"
+                        >
+                            View all
+                        </Link>
+                    </div>
 
-                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                            {featuredProjects.map((project) => (
-                                <Card
-                                    key={project.id}
-                                    className="overflow-hidden"
-                                >
-                                    {project.image_path && (
-                                        <img
-                                            src={storageUrl(project.image_path)}
-                                            alt={project.title}
-                                            className="aspect-video w-full object-cover"
-                                        />
+                    <div className="p-grid-3">
+                        {featuredProjects.map((project) => (
+                            <div
+                                key={project.id}
+                                className="p-card p-project-card"
+                            >
+                                {project.image_path && (
+                                    <img
+                                        src={storageUrl(project.image_path)}
+                                        alt={project.title}
+                                        className="-mx-[26px] -mt-[26px] mb-1 aspect-video w-[calc(100%+52px)] rounded-t-[20px] object-cover"
+                                    />
+                                )}
+                                <div className="p-card-heading !mb-0">
+                                    {project.title}
+                                </div>
+                                <p className="p-desc">{project.summary}</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {(project.technologies ?? []).map(
+                                        (tech) => (
+                                            <span
+                                                key={tech}
+                                                className="p-tag"
+                                            >
+                                                {tech}
+                                            </span>
+                                        ),
                                     )}
-                                    <CardHeader>
-                                        <CardTitle>{project.title}</CardTitle>
-                                        <CardDescription>
-                                            {project.summary}
-                                        </CardDescription>
-                                    </CardHeader>
-                                    <CardContent className="flex flex-wrap gap-2">
-                                        {(project.technologies ?? []).map(
-                                            (tech) => (
-                                                <Badge
-                                                    key={tech}
-                                                    variant="outline"
-                                                >
-                                                    {tech}
-                                                </Badge>
-                                            ),
-                                        )}
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </section>
             )}
